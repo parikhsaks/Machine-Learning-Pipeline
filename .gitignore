@@ -1,0 +1,15 @@
+# macOS
+.DS_Store
+
+# Large data files
+*.tar.gz
+*.zip
+*.tar
+*.rar
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
