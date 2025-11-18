@@ -1,0 +1,268 @@
+{
+  "metadata": {
+    "total_queries": 12,
+    "successful_queries": 12,
+    "success_rate": 100.0,
+    "timestamp": "2025-09-24T14:32:09.221563",
+    "model_used": "sonar-pro"
+  },
+  "results": [
+    {
+      "natural_query": "Show me all customers who have placed orders in the last 30 days with their order details",
+      "sql": "SELECT c.customer_id, c.customer_name, c.email, c.city, c.country, o.order_id, o.order_date, o.total_amount, o.status, o.shipping_address\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nWHERE o.order_date >= DATE('now', '-30 days')\nORDER BY o.order_date DESC, c.customer_name;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": [],
+        "columns": [
+          "customer_id",
+          "customer_name",
+          "email",
+          "city",
+          "country",
+          "order_id",
+          "order_date",
+          "total_amount",
+          "status",
+          "shipping_address"
+        ],
+        "row_count": 0,
+        "error": null,
+        "execution_time": 0.5
+      },
+      "timestamp": "2025-09-24T14:31:24.158998"
+    },
+    {
+      "natural_query": "Find the top 5 best-selling products by total quantity sold",
+      "sql": "SELECT p.product_name, SUM(oi.quantity) AS total_quantity_sold\nFROM products p\nJOIN order_items oi ON p.product_id = oi.product_id\nGROUP BY p.product_id, p.product_name\nORDER BY total_quantity_sold DESC\nLIMIT 5;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[5 rows]",
+        "columns": [
+          "product_name",
+          "total_quantity_sold"
+        ],
+        "row_count": 5,
+        "error": null,
+        "execution_time": 0.35,
+        "sample_results": "[('Wireless Mouse', 4), ('Laptop Pro 15\"', 3), ('Monitor 27\"', 3), ('Mechanical Keyboard', 2), ('Office Chair Deluxe', 1)]"
+      },
+      "timestamp": "2025-09-24T14:31:27.747658"
+    },
+    {
+      "natural_query": "List all orders with customer names for orders above $1000",
+      "sql": "SELECT o.order_id, o.order_date, o.total_amount, c.customer_name\nFROM orders o\nJOIN customers c ON o.customer_id = c.customer_id\nWHERE o.total_amount > 1000\nORDER BY o.order_date DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[2 rows]",
+        "columns": [
+          "order_id",
+          "order_date",
+          "total_amount",
+          "customer_name"
+        ],
+        "row_count": 2,
+        "error": null,
+        "execution_time": 0.42,
+        "sample_results": "[(7, '2023-04-07 08:30:00', 1949.96, 'Jane Doe'), (1, '2023-04-01 10:30:00', 1419.97, 'John Smith')]"
+      },
+      "timestamp": "2025-09-24T14:31:33.480536"
+    },
+    {
+      "natural_query": "Get the average order value by customer city",
+      "sql": "SELECT c.city, AVG(o.total_amount) AS average_order_value\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nGROUP BY c.city\nORDER BY average_order_value DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[5 rows]",
+        "columns": [
+          "city",
+          "average_order_value"
+        ],
+        "row_count": 5,
+        "error": null,
+        "execution_time": 0.13,
+        "sample_results": "[('Los Angeles', 1274.975), ('Miami', 779.97), ('New York', 769.975), ('Chicago', 299.99), ('Seattle', 29.99)]"
+      },
+      "timestamp": "2025-09-24T14:31:35.622165"
+    },
+    {
+      "natural_query": "Show products that are low in stock (less than 30 items) with their supplier information",
+      "sql": "SELECT p.product_name, p.category, p.price, p.stock_quantity, s.supplier_name, s.country\nFROM products p\nJOIN suppliers s ON p.supplier_id = s.supplier_id\nWHERE p.stock_quantity < 30\nORDER BY p.stock_quantity ASC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[3 rows]",
+        "columns": [
+          "product_name",
+          "category",
+          "price",
+          "stock_quantity",
+          "supplier_name",
+          "country"
+        ],
+        "row_count": 3,
+        "error": null,
+        "execution_time": 0.19,
+        "sample_results": "[('Standing Desk', 'Furniture', 599.99, 15, 'GlobalSupply Co', 'Canada'), ('Office Chair Deluxe', 'Furniture', 299.99, 20, 'GlobalSupply Co', 'Canada'), ('Laptop Pro 15\"', 'Electronics', 1299.99, 25, 'TechCorp Industries', 'USA')]"
+      },
+      "timestamp": "2025-09-24T14:31:38.447155"
+    },
+    {
+      "natural_query": "Find customers who have spent more than $1500 total across all their orders",
+      "sql": "SELECT c.customer_id, c.customer_name, c.email, SUM(o.total_amount) AS total_spent\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nGROUP BY c.customer_id, c.customer_name, c.email\nHAVING total_spent > 1500\nORDER BY total_spent DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[2 rows]",
+        "columns": [
+          "customer_id",
+          "customer_name",
+          "email",
+          "total_spent"
+        ],
+        "row_count": 2,
+        "error": null,
+        "execution_time": 0.36,
+        "sample_results": "[(2, 'Jane Doe', 'jane@email.com', 2549.95), (1, 'John Smith', 'john@email.com', 1539.95)]"
+      },
+      "timestamp": "2025-09-24T14:31:42.691428"
+    },
+    {
+      "natural_query": "Display the total revenue generated by each product category",
+      "sql": "SELECT p.category, SUM(oi.quantity * oi.unit_price) AS total_revenue\nFROM products p\nJOIN order_items oi ON p.product_id = oi.product_id\nGROUP BY p.category\nORDER BY total_revenue DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[2 rows]",
+        "columns": [
+          "category",
+          "total_revenue"
+        ],
+        "row_count": 2,
+        "error": null,
+        "execution_time": 0.19,
+        "sample_results": "[('Electronics', 5329.87), ('Furniture', 899.98)]"
+      },
+      "timestamp": "2025-09-24T14:31:46.379110"
+    },
+    {
+      "natural_query": "Show suppliers and count how many products they supply, ordered by product count",
+      "sql": "SELECT s.supplier_name, s.country, COUNT(p.product_id) AS product_count\nFROM suppliers s\nJOIN products p ON s.supplier_id = p.supplier_id\nGROUP BY s.supplier_id, s.supplier_name, s.country\nORDER BY product_count DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[3 rows]",
+        "columns": [
+          "supplier_name",
+          "country",
+          "product_count"
+        ],
+        "row_count": 3,
+        "error": null,
+        "execution_time": 0.28,
+        "sample_results": "[('TechCorp Industries', 'USA', 3), ('GlobalSupply Co', 'Canada', 2), ('EuroTech Ltd', 'Germany', 2)]"
+      },
+      "timestamp": "2025-09-24T14:31:48.936255"
+    },
+    {
+      "natural_query": "Find all orders that contain products from multiple suppliers",
+      "sql": "SELECT o.order_id, o.order_date, o.customer_id, COUNT(DISTINCT p.supplier_id) AS supplier_count\nFROM orders o\nJOIN order_items oi ON o.order_id = oi.order_id\nJOIN products p ON oi.product_id = p.product_id\nGROUP BY o.order_id, o.order_date, o.customer_id\nHAVING COUNT(DISTINCT p.supplier_id) > 1\nORDER BY o.order_date DESC, o.order_id;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[1 rows]",
+        "columns": [
+          "order_id",
+          "order_date",
+          "customer_id",
+          "supplier_count"
+        ],
+        "row_count": 1,
+        "error": null,
+        "execution_time": 0.58,
+        "sample_results": "[(7, '2023-04-07 08:30:00', 2, 2)]"
+      },
+      "timestamp": "2025-09-24T14:31:57.745902"
+    },
+    {
+      "natural_query": "List the most recent order for each customer with product details",
+      "sql": "SELECT o.order_id, o.order_date, o.total_amount, c.customer_id, c.customer_name, p.product_id, p.product_name, oi.quantity, oi.unit_price, oi.discount\nFROM customers c\nJOIN (\n    SELECT customer_id, MAX(order_date) AS max_order_date\n    FROM orders\n    GROUP BY customer_id\n) mo ON c.customer_id = mo.customer_id\nJOIN orders o ON o.customer_id = c.customer_id AND o.order_date = mo.max_order_date\nJOIN order_items oi ON o.order_id = oi.order_id\nJOIN products p ON oi.product_id = p.product_id\nORDER BY c.customer_id, o.order_date DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[9 rows]",
+        "columns": [
+          "order_id",
+          "order_date",
+          "total_amount",
+          "customer_id",
+          "customer_name",
+          "product_id",
+          "product_name",
+          "quantity",
+          "unit_price",
+          "discount"
+        ],
+        "row_count": 9,
+        "error": null,
+        "execution_time": 0.57,
+        "sample_results": "[(3, '2023-04-03 09:45:00', 119.98, 1, 'John Smith', 2, 'Wireless Mouse', 1, 29.99, 0.0), (3, '2023-04-03 09:45:00', 119.98, 1, 'John Smith', 3, 'Mechanical Keyboard', 1, 89.99, 0.0), (7, '2023-04-07 08:30:00', 1949.96, 2, 'Jane Doe', 1, 'Laptop Pro 15\"', 1, 1299.99, 0.0), (7, '2023-04-07 08:30:00', 1949.96, 2, 'Jane Doe', 6, 'Monitor 27\"', 1, 349.99, 0.0), (7, '2023-04-07 08:30:00', 1949.96, 2, 'Jane Doe', 1, 'Laptop Pro 15\"', 1, 1299.99, 0.0)]"
+      },
+      "timestamp": "2025-09-24T14:32:03.272094"
+    },
+    {
+      "natural_query": "Show which products have never been ordered",
+      "sql": "SELECT p.product_id, p.product_name, p.category, p.price, p.stock_quantity\nFROM products p\nLEFT JOIN order_items oi ON p.product_id = oi.product_id\nWHERE oi.product_id IS NULL\nORDER BY p.product_name;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": [],
+        "columns": [
+          "product_id",
+          "product_name",
+          "category",
+          "price",
+          "stock_quantity"
+        ],
+        "row_count": 0,
+        "error": null,
+        "execution_time": 0.49
+      },
+      "timestamp": "2025-09-24T14:32:05.428612"
+    },
+    {
+      "natural_query": "Find customers who have ordered from the Electronics category more than twice",
+      "sql": "SELECT c.customer_name, c.email, COUNT(*) AS electronics_orders\nFROM customers c\nJOIN orders o ON c.customer_id = o.customer_id\nJOIN order_items oi ON o.order_id = oi.order_id\nJOIN products p ON oi.product_id = p.product_id\nWHERE p.category = 'Electronics'\nGROUP BY c.customer_id, c.customer_name, c.email\nHAVING COUNT(*) > 2\nORDER BY electronics_orders DESC;",
+      "method": "Perplexity API",
+      "model": "sonar-pro",
+      "validation": {
+        "valid": true,
+        "results": "[2 rows]",
+        "columns": [
+          "customer_name",
+          "email",
+          "electronics_orders"
+        ],
+        "row_count": 2,
+        "error": null,
+        "execution_time": 0.45,
+        "sample_results": "[('John Smith', 'john@email.com', 5), ('Jane Doe', 'jane@email.com', 3)]"
+      },
+      "timestamp": "2025-09-24T14:32:09.213381"
+    }
+  ]
+}

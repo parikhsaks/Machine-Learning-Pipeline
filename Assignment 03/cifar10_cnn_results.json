@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Baseline",
+    "accuracy": 0.7317000031471252,
+    "loss": 0.8008823990821838,
+    "final_train_acc": 0.9878222346305847,
+    "final_val_acc": 0.7458000183105469
+  },
+  {
+    "name": "With BatchNorm",
+    "accuracy": 0.7404000163078308,
+    "loss": 0.7664377093315125,
+    "final_train_acc": 1.0,
+    "final_val_acc": 0.8185999989509583
+  },
+  {
+    "name": "With Dropout",
+    "accuracy": 0.8260999917984009,
+    "loss": 0.5655207633972168,
+    "final_train_acc": 0.8810222148895264,
+    "final_val_acc": 0.8285999894142151
+  },
+  {
+    "name": "BN + Dropout",
+    "accuracy": 0.8535000085830688,
+    "loss": 0.5041055083274841,
+    "final_train_acc": 0.949400007724762,
+    "final_val_acc": 0.8601999878883362
+  },
+  {
+    "name": "Shallow (2 blocks)",
+    "accuracy": 0.8173999786376953,
+    "loss": 0.6056810617446899,
+    "final_train_acc": 0.9594666957855225,
+    "final_val_acc": 0.829200029373169
+  },
+  {
+    "name": "Deep (4 blocks)",
+    "accuracy": 0.8453999757766724,
+    "loss": 0.5827187895774841,
+    "final_train_acc": 0.9778666496276855,
+    "final_val_acc": 0.8664000034332275
+  },
+  {
+    "name": "ELU Activation",
+    "accuracy": 0.8544999957084656,
+    "loss": 0.5185108780860901,
+    "final_train_acc": 0.9571777582168579,
+    "final_val_acc": 0.8597999811172485
+  },
+  {
+    "name": "Swish Activation",
+    "accuracy": 0.8468000292778015,
+    "loss": 0.5182490944862366,
+    "final_train_acc": 0.9582889080047607,
+    "final_val_acc": 0.8525999784469604
+  }
+]
